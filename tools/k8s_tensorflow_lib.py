@@ -95,6 +95,7 @@ spec:
     ports:
     - containerPort: {port}
     env: [{env_vars}]
+    resources: {{limits: {resource_limits} }}
     volumeMounts: [{volume_mounts}]
   volumes: [{volumes}]
 """)
@@ -129,7 +130,7 @@ _ARG_TEMPLATE = '"--%s=%s"'
 _SHARED_VOLUME_INFO = {'shared': ('/shared', '/shared')}
 _VOLUME_MOUNT_TEMPLATE = '{name: %s, mountPath: %s}'
 _VOLUME_TEMPLATE = '{name: %s, hostPath: {path: %s}}'
-_GPU_TEMPLATE = '{alpha.kubernetes.io/nvidia-gpu: %d}'
+_GPU_TEMPLATE = '{nvidia.com/gpu: %d}'
 
 def GenerateConfig(num_workers,
                    num_param_servers,
@@ -235,7 +236,8 @@ def GenerateConfig(num_workers,
         volume_mounts=volume_mounts_str,
         volumes=volumes_str,
         args=arg_str,
-        env_vars=env_str)
+        env_vars=env_str,
+        resource_limits=_GPU_TEMPLATE % gpu_limit if gpu_limit > 0 else '')
     config += '---\n'
     if request_load_balancer:
       config += PARAM_LB_SVC.format(

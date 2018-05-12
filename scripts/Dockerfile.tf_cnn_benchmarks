@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:nightly-gpu-py3
+FROM tensorflow/tensorflow:1.7.0-gpu-py3
 
 RUN apt-get update && apt-get install -y python3-pip && pip3 install google-cloud && pip3 install absl-py
 COPY tf_cnn_benchmarks/ ./

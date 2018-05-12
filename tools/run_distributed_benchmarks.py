@@ -31,7 +31,7 @@ import kubectl_util
 import yaml
 
 
-_DOCKER_IMAGE_PATTERN = 'gcr.io/tensorflow-testing/benchmarks/%s'
+_DOCKER_IMAGE_PATTERN = 'gcr.io/robotic-facet-200213/%s'
 _OUTPUT_FILE_ENV_VAR = 'TF_DIST_BENCHMARK_RESULTS_FILE'
 _TEST_NAME_ENV_VAR = 'TF_DIST_BENCHMARK_NAME'
 _PORT = 5000
@@ -183,7 +183,7 @@ def main():
     if gpu_count > 0:
       volumes = get_gpu_volume_mounts()
       env_vars['LD_LIBRARY_PATH'] = (
-          '/usr/lib/cuda:/usr/lib/nvidia:/usr/lib/x86_64-linux-gnu')
+          '/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64')
 
     env_vars.update(config.get('env_vars', {}))
     args = config.get('args', {})
