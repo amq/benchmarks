@@ -42,9 +42,10 @@
     num_gpus: 1
     local_parameter_device: "gpu"
     variable_update: "distributed_replicated"
+    print_training_accuracy: True
     num_epochs: 2
     batch_size: 16
-  worker_count: 2
+  worker_count: 1
   ps_count: 1
   gpus_per_machine: 1
   docker_file: "benchmarks/scripts/Dockerfile.tf_cnn_benchmarks"
